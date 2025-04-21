@@ -1,4 +1,6 @@
 import React from "react";
+import jsPDF from "jspdf";
+import autoTable from "jspdf-autotable";
 
 const SMSReportCard = () => {
   const data = [
@@ -21,7 +23,97 @@ const SMSReportCard = () => {
     { branchCode: 212, branch: "RAMECHHAP DC", scno: "212.38.013CHA2KA", customerId: 90, name: "Bishal Khatri", address: "NOADD15", mobile: "9841456789", days: 53, balance: 312, status: "Sent", sentAt: "17-Mar-25" },
   ];
 
+  const exportToPDF = () => {
+    const doc = new jsPDF();
+    doc.setFontSize(14);
+    doc.text("Today's SMS Report", 14, 15);
+
+    const tableColumn = [
+      "Branch Code",
+      "Branch",
+      "SCNO",
+      "Customer Id",
+      "Name",
+      "Address",
+      "Mobile Number",
+      "No. of Days",
+      "Balance Amount",
+      "Status",
+      "Sent At",
+    ];
+
+
+    const tableRows = data.map(item => [
+      item.branchCode,
+      item.branch,
+      item.scno,
+      item.customerId,
+      item.name,
+      item.address,
+      item.mobile,
+      item.days,
+      item.balance,
+      item.status,
+      item.sentAt,
+    ]);
+
+    autoTable(doc, {
+      startY: 20,
+      head: [tableColumn],
+      body: tableRows,
+      theme: "grid",
+      styles: {
+        fontSize: 9,
+        lineWidth: 0.1,
+        lineColor: [0, 0, 0], // Black borders
+      },
+      headStyles: {
+        fillColor: [220, 53, 69], // Red background
+        textColor: [255, 255, 255], // White text
+        lineWidth: 0.1,
+        lineColor: [0, 0, 0],
+      },
+    });
+ 
+    doc.save("todays_sms_report.pdf");
+  };
+
   return (
+
+    <div className="min-h-screen flex flex-col items-center bg-white p-6">
+      {/* Header + PDF Export Button */}
+      <div className="w-full max-w-7xl flex justify-between items-center mb-4">
+        <h2 className="text-2xl font-bold text-gray-700"></h2>
+        <button
+          onClick={exportToPDF}
+          className="bg-red-500 text-white px-4 py-2 rounded-md hover:bg-red-600 transition"
+        >
+          Download Today's Report
+        </button>
+      </div>
+
+      {/* Filter Section */}
+      <div className="flex justify-center mb-6">
+        <div className="flex gap-4 items-end">
+          {/* Start Date */}
+          <div className="bg-blue-100 p-3 rounded-lg shadow-md">
+            <label className="font-semibold text-blue-800 block mb-1">Start Date</label>
+            <input type="date" className="p-1 border border-gray-300 rounded-md text-sm w-36" />
+          </div>
+
+          {/* End Date */}
+          <div className="bg-blue-100 p-3 rounded-lg shadow-md">
+            <label className="font-semibold text-blue-800 block mb-1">End Date</label>
+            <input type="date" className="p-1 border border-gray-300 rounded-md text-sm w-36" />
+          </div>
+
+          {/* Filter Button */}
+          <div className="pt-3">
+            <button className="bg-blue-600 text-white px-4 py-1.5 rounded-md text-sm hover:bg-blue-700 transition-all">
+              Filter
+            </button>
+          </div>
+
     <div className=" flex flex-col items-center bg-gray-200 p-6">
       {/* Filter Section */}
       <div className="w-full  bg-white rounded-xl p-6 mb-6 ">
@@ -45,6 +137,7 @@ const SMSReportCard = () => {
               Filter
             </button>
           </div>
+
 
         </div>
       </div>

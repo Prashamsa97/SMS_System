@@ -14,6 +14,80 @@ const AdminHeader = () => {
     navigate('/');
   };
 
+
+  // Updated nav links
+  const links = [
+    { name: "Dashboard", to: "/admin/dashboard" },
+    { name: "Preview Data", to: "/admin/preview-data" },
+    { name: "Yesterday's Data", to: "/admin/yesterday-data" }, // 👈 Inserted here
+    { name: "SMS Report", to: "/admin/sms-report" },
+    { name: "Manage User", to: "/admin/manage-users" },
+  ];
+
+  return (
+    <>
+      <style>
+        {`
+          .admin-header {
+            position: relative;
+            width: 100%;
+            overflow: hidden;
+            padding-bottom: 6rem;
+          }
+          .admin-header__bg {
+            height: 200px;
+            background-size: cover;
+            background-position: center;
+          }
+          .admin-header__logo {
+            position: absolute;
+            top: 100px;
+            left: 5rem;
+            height: 180px;
+            border-radius: 9999px;
+            border: 4px solid white;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.2);
+            z-index: 20;
+          }
+          .admin-header__navbar-container {
+            position: absolute;
+            top: 170px;
+            left:55%;
+            transform: translateX(-50%);
+            z-index: 10;
+          }
+          .admin-header__navbar {
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+            background: linear-gradient(to bottom, #BFE0F1, white);
+            padding: 1rem 3rem;
+            border-radius: 40px;
+            box-shadow: 0 10px 15px rgba(0,0,0,0.1);
+          }
+          .admin-header__link {
+            font-size: 1rem;
+            font-weight: 600;
+            color: #333;
+            padding: 0.25rem 1rem;
+            border-radius: 40px;
+            white-space: nowrap;
+            transition: all 0.2s ease;
+            text-decoration: none;
+          }
+          .admin-header__link:hover,
+          .admin-header__link.active {
+            background-color: white;
+            color: #111;
+            font-weight: bold;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+          }
+          .admin-header__link.special:hover {
+            color: red;
+          }
+        `}
+      </style>
+
   const links = [
     { name: "Dashboard", to: "/dashboard" },
     { name: "Preview Data", to: "/preview-data" },
@@ -28,6 +102,7 @@ const AdminHeader = () => {
         className="md:h-[130px] h-[120px]  bg-cover object-fill  w-[100vw]  bg-center"
         style={{ backgroundImage: `url(${bgImage})` }}
       ></div>
+
 
       {/* Logo */}
       <img
